@@ -3,3 +3,9 @@ uvicorn
 python-dotenv
 sqlalchemy
 psycopg2-binary
+pytest
+httpx
+passlib==1.7.4
+bcrypt==3.2.2
+python-jose
+python-multipart
