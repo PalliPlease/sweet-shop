@@ -7,6 +7,7 @@ export default function Login({ onLogin }) {
 
   async function handleLogin(e) {
     e.preventDefault();
+    // alert("LOGIN CLICKED"); 
 
     const res = await fetch("http://127.0.0.1:8000/api/auth/login", {
       method: "POST",
@@ -33,8 +34,9 @@ export default function Login({ onLogin }) {
     }
 
     saveToken(data.access_token);
-    alert("Login success");
-    onLogin();
+    alert("Login successful");
+
+    onLogin && onLogin();
   }
 
   return (
@@ -45,6 +47,7 @@ export default function Login({ onLogin }) {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
 
       <input
@@ -52,6 +55,7 @@ export default function Login({ onLogin }) {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
       />
 
       <button type="submit">Login</button>

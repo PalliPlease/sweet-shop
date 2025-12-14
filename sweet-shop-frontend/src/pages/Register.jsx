@@ -19,7 +19,9 @@ export default function Register() {
     console.log("REGISTER RESPONSE:", data);
 
     if (res.ok) {
-      alert("Registered successfully. Now login.");
+      alert("Registered successfully. Please login.");
+      setEmail("");
+      setPassword("");
     } else {
       alert(data.detail || "Register failed");
     }
@@ -33,6 +35,7 @@ export default function Register() {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
 
       <input
@@ -40,6 +43,7 @@ export default function Register() {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
       />
 
       <button type="submit">Register</button>

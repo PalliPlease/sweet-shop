@@ -10,12 +10,11 @@ export async function apiRequest(path, options = {}) {
   const headers = {
     "Content-Type": "application/json",
     ...(token && { Authorization: `Bearer ${token}` }),
+    ...options.headers,
   };
 
-  const res = await fetch(`${API_URL}${path}`, {
+  return fetch(`${API_URL}${path}`, {
     ...options,
     headers,
   });
-
-  return res;
 }
