@@ -2,6 +2,8 @@
 
 ## Overview
 
+CHECK IT OUT HERE! - https://fastapi-nmzj.vercel.app/
+
 The Sweet Shop Management System is a full-stack web application designed to manage sweets inventory, user purchases, and administrative operations. The project demonstrates REST API design, authentication using JWT, role-based access control, database management, frontend integration, and automated testing using Test-Driven Development principles.
 
 The system supports normal users for browsing and purchasing sweets, and admin users for managing inventory.
@@ -144,13 +146,13 @@ Impact on my workflow:
 
 ## Screenshots
 - Login Page
-<img width="678" height="570" alt="image" src="https://github.com/user-attachments/assets/7b63c9e8-5838-462e-b552-a5e57698d726" />
+<img width="943" height="671" alt="image" src="https://github.com/user-attachments/assets/c2a0577a-0bcf-49da-ba62-b0baee4df3a6" />
 
 - Admin Panel
-<img width="1919" height="877" alt="image" src="https://github.com/user-attachments/assets/fe658a3d-f9b4-4970-98c2-a87784972568" />
+<img width="1919" height="869" alt="image" src="https://github.com/user-attachments/assets/54f40553-49e9-43c1-9fae-9281c08aeea6" />
 
 - User Panel
-<img width="1906" height="856" alt="image" src="https://github.com/user-attachments/assets/8182cf25-ea02-44bb-b862-26f78ffcdcc2" />
+<img width="1918" height="843" alt="image" src="https://github.com/user-attachments/assets/99a707f1-6a87-4772-9eb7-876e2990da43" />
 
 ## Test Report
 <img width="1919" height="720" alt="image" src="https://github.com/user-attachments/assets/fe9914de-230c-4b58-8677-0a84e08435e0" />
