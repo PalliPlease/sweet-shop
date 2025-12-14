@@ -155,5 +155,6 @@ Impact on my workflow:
 <img width="1918" height="843" alt="image" src="https://github.com/user-attachments/assets/99a707f1-6a87-4772-9eb7-876e2990da43" />
 
 ## Test Report
-<img width="1919" height="720" alt="image" src="https://github.com/user-attachments/assets/fe9914de-230c-4b58-8677-0a84e08435e0" />
+<img width="1280" height="555" alt="image" src="https://github.com/user-attachments/assets/d7741102-0fa8-4f28-a729-b87e889f814d" />
+
 
