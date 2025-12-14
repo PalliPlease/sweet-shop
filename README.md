@@ -152,4 +152,6 @@ Impact on my workflow:
 - User Panel
 <img width="1906" height="856" alt="image" src="https://github.com/user-attachments/assets/8182cf25-ea02-44bb-b862-26f78ffcdcc2" />
 
+## Test Report
+<img width="1919" height="720" alt="image" src="https://github.com/user-attachments/assets/fe9914de-230c-4b58-8677-0a84e08435e0" />
 
