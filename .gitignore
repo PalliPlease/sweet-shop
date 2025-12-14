@@ -1,0 +1,58 @@
+# React
+# --------------------------------------------------
+# node_modules
+node_modules/
+# build artifacts
+build/
+dist/
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# cache
+.eslintcache
+.next/ # Next.js specific
+.parcel-cache/ # Parcel specific
+# environment variables
+.env*.local
+.vercel/ # Vercel specific
+.netlify/ # Netlify specific
+
+
+# Python
+# --------------------------------------------------
+# virtual environment
+venv/
+.venv/
+env/
+# byte-compiled/optimized files
+__pycache__/
+*.py[cod]
+# distribution/packaging
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+# installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+# unit test/coverage reports
+.tox/
+.coverage
+nosetests.xml
+coverage.xml
+# translations
+*.mo
+# environment variables
+.env
+# IDE specific files (optional)
+.idea/ # JetBrains IDEs like PyCharm
+.vscode/ # VS Code

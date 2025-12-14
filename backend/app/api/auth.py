@@ -7,7 +7,7 @@ from app.db.session import SessionLocal
 from app.core.security import hash_password, verify_password, create_access_token
 from app.deps import get_current_user
 
-router = APIRouter(prefix="/api/auth", tags=["auth"])
+router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register(data: dict, db: Session = Depends(get_db)):
