@@ -107,7 +107,7 @@ npm run dev
 ```
 
 Default admin user
-admin@sweetshop.com
+admin@sweetshop.com and pass 
 admin123
 
 ## My AI Usage
@@ -116,29 +116,29 @@ I used ChatGPT as a development assistant throughout this project.
 
 How I used AI:
 
-To brainstorm API endpoint structure and REST design
+-To brainstorm API endpoint structure and REST design
 
 To generate initial boilerplate for FastAPI routes and schemas
 
-To debug SQLAlchemy relationship and foreign key issues
+-To debug SQLAlchemy relationship and foreign key issues
 
-To understand JWT payload design and role-based authorization
+-To understand JWT payload design and role-based authorization
 
-To improve frontend integration with authentication tokens
+-To improve frontend integration with authentication tokens
 
-To clarify pytest failures and improve test structure
+-To clarify pytest failures and improve test structure
 
 How I worked with AI:
 
-AI suggestions were used as a starting point
+-AI suggestions were used as a starting point
 
-All generated code was reviewed, modified, and integrated manually
+-All generated code was reviewed, modified, and integrated manually
 
-I debugged runtime and logic errors independently and verified fixes through tests
+-I debugged runtime and logic errors independently and verified fixes through tests
 
 Impact on my workflow:
 
-AI significantly reduced time spent on boilerplate and syntax lookup
+-AI significantly reduced time spent on boilerplate and syntax lookup
 
-Allowed me to focus more on architecture, debugging, and correctness
+-Allowed me to focus more on architecture, debugging, and correctness
 
