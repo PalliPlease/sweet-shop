@@ -1,97 +1,68 @@
-import { useState } from "react";
-import { getToken, getUserRole, logout } from "./auth";
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { getToken, getUserRole } from "./auth";
 
 import Register from "./pages/Register";
-import Login from "./pages/Login";
+import Login from "./pages/login"; // Note: file is login.jsx
 import Sweets from "./pages/Sweets";
 import Admin from "./pages/Admin";
+import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+function Layout({ role, setLoggedIn, setRole }) {
+  return (
+    <>
+      <Navbar role={role} setLoggedIn={setLoggedIn} setRole={setRole} />
+      <div style={{ padding: "0 2rem", maxWidth: "1200px", margin: "0 auto" }}>
+        <Outlet />
+      </div>
+    </>
+  );
+}
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!getToken());
   const [role, setRole] = useState(getUserRole());
-  const [showLogin, setShowLogin] = useState(true);
 
-  function handleLogin() {
-    setLoggedIn(true);
+  useEffect(() => {
+    setLoggedIn(!!getToken());
     setRole(getUserRole());
-  }
-
-  function handleLogout() {
-    logout();
-    setLoggedIn(false);
-    setRole(null);
-    setShowLogin(true);
-  }
-
-  if (!loggedIn) {
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <div
-          style={{
-            background: "white",
-            padding: 30,
-            borderRadius: 12,
-            width: 350,
-            boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-          }}
-        >
-          {showLogin ? (
-            <>
-              <Login onLogin={handleLogin} />
-              <p style={{ textAlign: "center" }}>
-                Don’t have an account?{" "}
-                <span
-                  style={{ color: "#4f46e5", cursor: "pointer" }}
-                  onClick={() => setShowLogin(false)}
-                >
-                  Register
-                </span>
-              </p>
-            </>
-          ) : (
-            <>
-              <Register />
-              <p style={{ textAlign: "center" }}>
-                Already have an account?{" "}
-                <span
-                  style={{ color: "#4f46e5", cursor: "pointer" }}
-                  onClick={() => setShowLogin(true)}
-                >
-                  Login
-                </span>
-              </p>
-            </>
-          )}
-        </div>
-      </div>
-    );
-  }
+  }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <button
-        onClick={handleLogout}
-        style={{
-          position: "absolute",
-          top: 10,
-          right: 10,
-          padding: "6px 12px",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button>
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path="/login" 
+          element={
+            loggedIn ? <Navigate to="/" replace /> : <Login setLoggedIn={setLoggedIn} setRole={setRole} />
+          } 
+        />
+        <Route 
+          path="/register" 
+          element={
+            loggedIn ? <Navigate to="/" replace /> : <Register />
+          } 
+        />
+        
+        <Route element={<ProtectedRoute><Layout role={role} setLoggedIn={setLoggedIn} setRole={setRole} /></ProtectedRoute>}>
+          <Route path="/" element={role === 'ADMIN' ? <Navigate to="/admin" replace /> : <Sweets />} />
+          <Route path="/admin" element={role === 'ADMIN' ? <Admin /> : <Navigate to="/" replace />} /> 
+          {/* Wait, duplicate route path "/" above. I should decide. 
+             If I want generic separate dashboard for Admin, I can do:
+             User -> / (Sweets)
+             Admin -> /admin (Admin Panel)
+             
+             Let's keep it simple:
+             / -> Sweets (Everyone sees sweets)
+             /admin -> Admin Panel (Only Admin)
+             
+             So I will remove the redirect from / to /admin.
+          */}
+        </Route>
 
-      <h1>Sweet Shop</h1>
-
-      {role === "ADMIN" ? <Admin /> : <Sweets />}
-    </div>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

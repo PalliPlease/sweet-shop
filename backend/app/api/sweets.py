@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 from app.deps import get_current_admin, get_current_user
+from typing import Optional
 
 from app.db.deps import get_db
 from app.models.sweet import Sweet
@@ -50,10 +51,10 @@ def list_sweets(db: Session = Depends(get_db)):
 
 @router.get("/search", response_model=list[SweetOut])
 def search_sweets(
-    name: str | None = None,
-    category: str | None = None,
-    min_price: float | None = None,
-    max_price: float | None = None,
+    name: Optional[str] = None,
+    category: Optional[str] = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
     db: Session = Depends(get_db),
 ):
     query = db.query(Sweet)
@@ -75,10 +76,12 @@ def search_sweets(
 @router.post("/{sweet_id}/purchase")
 def purchase_sweet(
     sweet_id: str,
-    quantity: int,
+    quantity: int = Body(..., embed=True),
     db: Session = Depends(get_db),
     user = Depends(get_current_user),
 ):
+    from app.models.order import Order # Import here to avoid circular imports if any, or top level
+
     sweet = db.query(Sweet).filter(Sweet.id == sweet_id).first()
 
     if not sweet:
@@ -88,7 +91,17 @@ def purchase_sweet(
         raise HTTPException(status_code=400, detail="Not enough stock")
 
     sweet.stock -= quantity
+    
+    # Create Order
+    new_order = Order(
+        user_id=user.id,
+        sweet_id=sweet.id,
+        quantity=quantity
+    )
+    db.add(new_order)
+    
     db.commit()
+    db.refresh(sweet)
 
     return {"message": "Purchase successful", "remaining_stock": sweet.stock}
 
@@ -106,6 +119,7 @@ def restock_sweet(
 
     sweet.stock += quantity
     db.commit()
+    db.refresh(sweet)
 
     return {"message": "Restocked successfully", "stock": sweet.stock}
 
@@ -123,19 +137,3 @@ def delete_sweet(
     db.delete(sweet)
     db.commit()
     return {"message": "Sweet deleted"}
-
-@router.post("/{sweet_id}/restock")
-def restock_sweet(
-    sweet_id: str,
-    quantity: int,
-    db: Session = Depends(get_db),
-    admin=Depends(get_current_admin)
-):
-    sweet = db.query(Sweet).filter(Sweet.id == sweet_id).first()
-
-    if not sweet:
-        raise HTTPException(status_code=404, detail="Sweet not found")
-
-    sweet.stock += quantity
-    db.commit()
-    return sweet

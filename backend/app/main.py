@@ -12,9 +12,13 @@ from app.db.session import engine
 
 app = FastAPI()
 
+origins = [
+    "https://fastapi-nmzj.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5174"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -35,25 +39,19 @@ def seed_sweets(db: Session):
         db.add_all(sweets)
         db.commit()
 
-from app.db.session import SessionLocal
-
-@app.on_event("startup")
-def startup_event():
-    db = SessionLocal()
-    seed_sweets(db)
-    db.close()
-
-
 @app.on_event("startup")
 def on_startup():
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
-    init_db(db)
-    db.close()
+    try:
+        init_db(db)
+        seed_sweets(db)
+    finally:
+        db.close()
 
 app.include_router(auth_router, prefix="/api")
 app.include_router(sweets_router, prefix="/api")
-app.include_router(orders_router, prefix="/api")
+# app.include_router(orders_router, prefix="/api") # We will remove orders router as we are moving logic to sweets
 
 @app.get("/")
 def health():
