@@ -108,3 +108,34 @@ def restock_sweet(
     db.commit()
 
     return {"message": "Restocked successfully", "stock": sweet.stock}
+
+@router.delete("/{sweet_id}")
+def delete_sweet(
+    sweet_id: str,
+    db: Session = Depends(get_db),
+    admin=Depends(get_current_admin)
+):
+    sweet = db.query(Sweet).filter(Sweet.id == sweet_id).first()
+
+    if not sweet:
+        raise HTTPException(status_code=404, detail="Sweet not found")
+
+    db.delete(sweet)
+    db.commit()
+    return {"message": "Sweet deleted"}
+
+@router.post("/{sweet_id}/restock")
+def restock_sweet(
+    sweet_id: str,
+    quantity: int,
+    db: Session = Depends(get_db),
+    admin=Depends(get_current_admin)
+):
+    sweet = db.query(Sweet).filter(Sweet.id == sweet_id).first()
+
+    if not sweet:
+        raise HTTPException(status_code=404, detail="Sweet not found")
+
+    sweet.stock += quantity
+    db.commit()
+    return sweet
